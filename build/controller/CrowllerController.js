@@ -21,6 +21,7 @@ var util_1 = require("../utils/util");
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var analyzer_1 = __importDefault(require("../utils/analyzer"));
 var checkLogin = function (req, res, next) {
+    console.log('check login middleware');
     var isLogin = !!(req.session ? req.session.login : false);
     if (isLogin) {
         next();
@@ -28,6 +29,10 @@ var checkLogin = function (req, res, next) {
     else {
         res.json(util_1.getResponseData(null, "请先登陆"));
     }
+};
+var test = function (req, res, next) {
+    console.log('test middleware');
+    next();
 };
 var CrowllerController = /** @class */ (function () {
     function CrowllerController() {

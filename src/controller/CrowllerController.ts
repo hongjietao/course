@@ -11,13 +11,21 @@ interface BodyRequest extends Request {
   body: { [key: string]: string | undefined };
 }
 
+
 const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
+  console.log('check login middleware');
+  
   const isLogin = !!(req.session ? req.session.login : false);
   if (isLogin) {
     next();
   } else {
     res.json(getResponseData(null, "请先登陆"));
   }
+};
+
+const test = (req: Request, res: Response, next: NextFunction): void => {
+  console.log('test middleware');
+  next()
 };
 
 @controller("/")
