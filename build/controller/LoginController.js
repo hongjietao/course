@@ -20,10 +20,14 @@ var LoginController = /** @class */ (function () {
     LoginController.isLogin = function (req) {
         return !!(req.session ? req.session.login : false);
     };
+    LoginController.prototype.isLogin = function (req, res) {
+        var isLogin = LoginController_1.isLogin(req);
+        res.json(util_1.getResponseData(isLogin));
+    };
     LoginController.prototype.login = function (req, res) {
         var isLogin = LoginController_1.isLogin(req);
         if (isLogin) {
-            res.json(util_1.getResponseData(false, "用户已登陆"));
+            res.json(util_1.getResponseData(true));
         }
         else {
             if (req.body.password === "123" && req.session) {
@@ -52,13 +56,19 @@ var LoginController = /** @class */ (function () {
     };
     var LoginController_1;
     __decorate([
-        decorator_1.post("/login"),
+        decorator_1.get("/api/isLogin"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", void 0)
+    ], LoginController.prototype, "isLogin", null);
+    __decorate([
+        decorator_1.post("/api/login"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], LoginController.prototype, "login", null);
     __decorate([
-        decorator_1.get("/logout"),
+        decorator_1.get("/api/logout"),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)

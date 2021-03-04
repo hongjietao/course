@@ -13,11 +13,17 @@ export class LoginController {
     return !!(req.session ? req.session.login : false);
   }
 
-  @post("/login")
+  @get("/api/isLogin")
+  isLogin(req: BodyRequest, res: Response): void {
+    const isLogin = LoginController.isLogin(req);
+    res.json(getResponseData(isLogin));
+  }
+
+  @post("/api/login")
   login(req: BodyRequest, res: Response): void {
     const isLogin = LoginController.isLogin(req);
     if (isLogin) {
-      res.json(getResponseData(false, "用户已登陆"));
+      res.json(getResponseData(true));
     } else {
       if (req.body.password === "123" && req.session) {
         req.session.login = true;
@@ -28,7 +34,7 @@ export class LoginController {
     }
   }
 
-  @get("/logout")
+  @get("/api/logout")
   logout(req: BodyRequest, res: Response): void {
     if (req.session) {
       req.session.login = undefined;
