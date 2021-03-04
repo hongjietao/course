@@ -7,19 +7,19 @@ interface BodyRequest extends Request {
   body: { [key: string]: string | undefined };
 }
 
-@controller("/")
+@controller("/api")
 export class LoginController {
   static isLogin(req: BodyRequest): boolean {
     return !!(req.session ? req.session.login : false);
   }
 
-  @get("/api/isLogin")
+  @get("/isLogin")
   isLogin(req: BodyRequest, res: Response): void {
     const isLogin = LoginController.isLogin(req);
     res.json(getResponseData(isLogin));
   }
 
-  @post("/api/login")
+  @post("/login")
   login(req: BodyRequest, res: Response): void {
     const isLogin = LoginController.isLogin(req);
     if (isLogin) {
@@ -34,38 +34,11 @@ export class LoginController {
     }
   }
 
-  @get("/api/logout")
+  @get("/logout")
   logout(req: BodyRequest, res: Response): void {
     if (req.session) {
       req.session.login = undefined;
     }
     res.json(getResponseData(true));
-  }
-
-  @get("/")
-  home(req: BodyRequest, res: Response): void {
-    const isLogin = LoginController.isLogin(req);
-    if (isLogin) {
-      res.send(`
-      <html>
-        <body>
-          <a href="/showData">show</a>
-          <a href="/getData">爬</a>
-          <a href="/logout">退出</a>
-        </body>
-      </html>
-      `);
-    } else {
-      res.send(`
-      <html>
-        <body>
-          <form method="post" action="/login">
-            <input type="password" name="password"/>
-            <button>登陆</button>
-          </form>
-        </body>
-      </html>
-      `);
-    }
   }
 }

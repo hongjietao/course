@@ -19,7 +19,7 @@ var DellAnalyzer = /** @class */ (function () {
         var courseItems = $(".item");
         var courseInfos = [];
         courseItems.map(function (index, element) {
-            if (index < 4) {
+            if (index < 10) {
                 var descs = $(element).find(".title");
                 var title = descs.eq(0).text();
                 var count = $(element)

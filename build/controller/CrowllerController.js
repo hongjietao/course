@@ -21,7 +21,6 @@ var util_1 = require("../utils/util");
 var crowller_1 = __importDefault(require("../utils/crowller"));
 var analyzer_1 = __importDefault(require("../utils/analyzer"));
 var checkLogin = function (req, res, next) {
-    console.log('check login middleware');
     var isLogin = !!(req.session ? req.session.login : false);
     if (isLogin) {
         next();
@@ -30,15 +29,11 @@ var checkLogin = function (req, res, next) {
         res.json(util_1.getResponseData(null, "请先登陆"));
     }
 };
-var test = function (req, res, next) {
-    console.log('test middleware');
-    next();
-};
 var CrowllerController = /** @class */ (function () {
     function CrowllerController() {
     }
     CrowllerController.prototype.getData = function (req, res) {
-        var url = "https://movie.douban.com/top250?start=75";
+        var url = "https://movie.douban.com/top250?start=0";
         var anslyzer = analyzer_1.default.getInstance();
         new crowller_1.default(url, anslyzer);
         res.json(util_1.getResponseData(true));
@@ -68,7 +63,7 @@ var CrowllerController = /** @class */ (function () {
         __metadata("design:returntype", void 0)
     ], CrowllerController.prototype, "showData", null);
     CrowllerController = __decorate([
-        decorator_1.controller("/")
+        decorator_1.controller("/api")
     ], CrowllerController);
     return CrowllerController;
 }());

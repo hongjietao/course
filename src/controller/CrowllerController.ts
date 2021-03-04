@@ -13,8 +13,6 @@ interface BodyRequest extends Request {
 
 
 const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
-  console.log('check login middleware');
-  
   const isLogin = !!(req.session ? req.session.login : false);
   if (isLogin) {
     next();
@@ -23,17 +21,12 @@ const checkLogin = (req: Request, res: Response, next: NextFunction): void => {
   }
 };
 
-const test = (req: Request, res: Response, next: NextFunction): void => {
-  console.log('test middleware');
-  next()
-};
-
-@controller("/")
+@controller("/api")
 export class CrowllerController {
   @get("/getData")
   @use(checkLogin)
   getData(req: BodyRequest, res: Response): void {
-    const url = `https://movie.douban.com/top250?start=75`;
+    const url = `https://movie.douban.com/top250?start=0`;
     const anslyzer = Analyzer.getInstance();
     new Crowller(url, anslyzer);
     res.json(getResponseData(true));
